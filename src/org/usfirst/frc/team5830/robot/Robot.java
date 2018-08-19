@@ -144,11 +144,11 @@ public class Robot extends TimedRobot{
 	private static Command commandSpitCube = new TeleopSpitCube();
 	private static Command driveBalance = new DriveBalance();
 	private static Command rotateTo0 = new DriveRotationSetpoint(0);
-	private static Command rotateTo45 = new DriveRotationSetpoint(45);
+	public static Command rotateTo45 = new DriveRotationSetpoint(45);
 	private static Command rotateTo90 = new DriveRotationSetpoint(90);
 	private static Command rotateTo180 = new DriveRotationSetpoint(180);
 	private static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
-	private static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
+	public static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
 	private static Command autoLogicMain = new AutoLogicMain();
 	
 	/**
