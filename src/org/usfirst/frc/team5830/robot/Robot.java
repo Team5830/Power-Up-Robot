@@ -8,14 +8,11 @@
 package org.usfirst.frc.team5830.robot;
 
 import org.usfirst.frc.team5830.robot.commands.AutoLogicMain;
-import org.usfirst.frc.team5830.robot.commands.CubeToGround;
-import org.usfirst.frc.team5830.robot.commands.CubeToScale;
-import org.usfirst.frc.team5830.robot.commands.CubeToSwitch;
+import org.usfirst.frc.team5830.robot.commands.ChooseButtonLayout;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
 import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
 import org.usfirst.frc.team5830.robot.commands.SuckCube;
 import org.usfirst.frc.team5830.robot.commands.TeleopSpitCube;
-import org.usfirst.frc.team5830.robot.commands.WinchRelease;
 import org.usfirst.frc.team5830.robot.subsystems.GyroSubsystem;
 import org.usfirst.frc.team5830.robot.subsystems.LIDARSubsystem;
 import org.usfirst.frc.team5830.robot.subsystems.PIDElevator;
@@ -27,6 +24,7 @@ import org.usfirst.frc.team5830.robot.subsystems.PowerCube;
 import org.usfirst.frc.team5830.robot.subsystems.SwerveDrive;
 import org.usfirst.frc.team5830.robot.subsystems.WheelDrive;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -34,7 +32,6 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -142,8 +139,7 @@ public class Robot extends TimedRobot{
 	/**
 	 * Commands
 	 */
-	//private static Command chooseButtonLayout = new ChooseButtonLayout();
-	
+	private static Command chooseButtonLayout = new ChooseButtonLayout();
 	private static Command commandSuckCube = new SuckCube();
 	private static Command commandSpitCube = new TeleopSpitCube();
 	private static Command driveBalance = new DriveBalance();
@@ -154,18 +150,6 @@ public class Robot extends TimedRobot{
 	private static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
 	private static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
 	private static Command autoLogicMain = new AutoLogicMain();
-	
-	//This block was used for testing before the drive CIMcoder was installed. Same thing as DriveMotionProfiling except distance was disabled.
-	/*
-	private static Command driveBalance = new DriveBalance();
-	private static Command rotateTo0 = new TESTDriveRotation(0);
-	private static Command rotateTo45 = new TESTDriveRotation(45);
-	private static Command rotateTo90 = new TESTDriveRotation(90);
-	private static Command rotateTo180 = new TESTDriveRotation(180);
-	private static Command rotateToNeg90 = new TESTDriveRotation(-90);
-	private static Command rotateToNeg45 = new TESTDriveRotation(-45);
-	private static Command autoLogicMain = new AutoLogicMain();
-	*/
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -179,28 +163,16 @@ public class Robot extends TimedRobot{
 		 * Cameras/Vision
 		 */
 		//Camera Stream
-		CameraServer.getInstance().startAutomaticCapture("Camera 1",0);
-		//CameraServer.getInstance().startAutomaticCapture("Camera 2",1);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(1);
+		camera.setResolution(640, 480);
+		camera.setFPS(30);
 		
 		//Vision Coordinates
 		
 		/**
 		 * SmartDashboard
-		 */
-		//Auto
-		/*chooser.addDefault("Cross Auto (Default)", new AutoMoveCrossAuto());
-		chooser.addObject("Left, Prioritize Scale", new AutoLogicLScale());
-		chooser.addObject("Left,  Scale ONLY", new AutoLogicLScaleONLY());
-		chooser.addObject("Left,  Prioritize Switch", new AutoLogicLSwitch());
-		chooser.addObject("Left,  Switch ONLY", new AutoLogicLSwitchONLY());
-		chooser.addObject("Center, Switches", new AutoLogicCSwitch());
-		chooser.addObject("Right, Prioritize Scale", new AutoLogicRScale());
-		chooser.addObject("Right,  Scale ONLY", new AutoLogicRScaleONLY());
-		chooser.addObject("Right, Prioritize Switch", new AutoLogicRSwitch());
-		chooser.addObject("Right,  Switch ONLY", new AutoLogicRSwitchONLY());
-		SmartDashboard.putData("TESTING ONLY Auto Mode", chooser);*/
-		
-		//Auto PROTOTYPE (Based on case switches all in one command)
+		 */		
+		//Autonmous Mode
 		autoChooser.addDefault("Cross Auto (Default)", "CrossAuto");
 		autoChooser.addObject("Prioritize Scale", "Scale");
 		autoChooser.addObject("Scale ONLY", "ScaleOnly");
@@ -214,11 +186,6 @@ public class Robot extends TimedRobot{
 		SmartDashboard.putData("Starting Position", autoPosition);
 		
 		//Choose between field and robot-oriented drive
-		/* DEPRECATED. Changed from Chooser to direct boolean (below) for Shuffleboard compatibility
-		driveType.addDefault("Field Oriented", true);
-		driveType.addObject("Robot Oriented", false);
-		SmartDashboard.putData("Drive Mode", driveType);
-		*/
 		SmartDashboard.putBoolean("Field Oriented?", false);
 		
 		//Overrides cube distance check if enabled and runs instake on button command regardless of what the LIDAR distance is.
@@ -275,29 +242,12 @@ public class Robot extends TimedRobot{
 		}
 		
 	}
-
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
+	
 	@Override
 	public void autonomousInit() {
 		//Forces drivetrain into Robot-Oriented drive for auto
 		isFieldOriented = false;
 		autoLogicMain.start();
-		
-		
-		
-		
-		
-		
 		
 		/*autonomousCommand = (Command) chooser.getSelected();
 		if (autonomousCommand != null) autonomousCommand.start();*/
@@ -314,78 +264,13 @@ public class Robot extends TimedRobot{
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		if (autoLogicMain != null) {
 			autoLogicMain.cancel();
 			SmartDashboard.putString("Autonomous Status", "Teleop Enabled");
-			//commandTeleopDrive.start();
-			
 		}
 		
-		//Initiates command to call buttons according to the option selected on SmartDashboard (Command name = ChooseButtonLayout)
-		switch (Robot.controlType.getSelected()) {
-		case 0: //General Flightsticks (Default)
-			Robot.leftJoy = new Joystick(0);
-			Robot.rightJoy = new Joystick(1);
-			Robot.button1 = new JoystickButton(Robot.leftJoy, 1);             //Trigger
-			Robot.button2 = new JoystickButton(Robot.rightJoy, 1);            //Trigger
-			Robot.buttonCubeToScale = new JoystickButton(Robot.rightJoy,6);   //(Top) Upper Right
-			Robot.buttonCubeToSwitch = new JoystickButton(Robot.rightJoy,5);  //(Top) Upper Left
-			Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
-			Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
-			Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
-			break;
-		case 1: //General Xbox
-			Robot.xbox = new Joystick(2);
-			Robot.button1 = new JoystickButton(Robot.xbox, 6);            //LB
-			Robot.button2 = new JoystickButton(Robot.xbox, 5);            //RB
-			Robot.buttonCubeToScale = new JoystickButton(Robot.xbox,4);   //Y
-			Robot.buttonCubeToSwitch = new JoystickButton(Robot.xbox,2);  //B
-			Robot.buttonCubeToGround1 = new JoystickButton(Robot.xbox,1); //A
-			Robot.buttonWinchRelease = new JoystickButton(Robot.xbox,3);  //X
-			break;
-		case 2: //Daniel
-			Robot.xbox = new Joystick(2);
-			Robot.button1 = new JoystickButton(Robot.xbox, 6);            //LB
-			Robot.button2 = new JoystickButton(Robot.xbox, 5);            //RB
-			Robot.buttonCubeToScale = new JoystickButton(Robot.xbox,4);   //Y
-			Robot.buttonCubeToSwitch = new JoystickButton(Robot.xbox,2);  //B
-			Robot.buttonCubeToGround1 = new JoystickButton(Robot.xbox,1); //A
-			Robot.buttonWinchRelease = new JoystickButton(Robot.xbox,3);  //X
-			break;
-		case 3: //Hannah
-			Robot.leftJoy = new Joystick(0);
-			Robot.rightJoy = new Joystick(1);
-			Robot.button1 = new JoystickButton(Robot.leftJoy, 1);             //Trigger
-			Robot.button2 = new JoystickButton(Robot.rightJoy, 1);            //Trigger
-			Robot.buttonCubeToScale = new JoystickButton(Robot.rightJoy,6);   //(Top) Upper Right
-			Robot.buttonCubeToSwitch = new JoystickButton(Robot.rightJoy,5);  //(Top) Upper Left
-			Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
-			Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
-			Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
-			break;
-		case 4: //Hunter
-			Robot.leftJoy = new Joystick(0);
-			Robot.rightJoy = new Joystick(1);
-			Robot.button1 = new JoystickButton(Robot.leftJoy, 1);             //Trigger
-			Robot.button2 = new JoystickButton(Robot.rightJoy, 1);            //Trigger
-			Robot.buttonCubeToScale = new JoystickButton(Robot.rightJoy,6);   //(Top) Upper Right
-			Robot.buttonCubeToSwitch = new JoystickButton(Robot.rightJoy,5);  //(Top) Upper Left
-			Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
-			Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
-			Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
-			break;
-		}
-		
-		//Links commands to buttons
-		//button1 and button2 have been moved to teleopPeriodic since whileHeld didn't work here.
-		buttonCubeToGround1.whenPressed(new CubeToGround());
-		buttonCubeToSwitch.whenPressed(new CubeToSwitch());
-		buttonCubeToScale.whenPressed(new CubeToScale());
-		buttonWinchRelease.whenPressed(new WinchRelease());
+		//Takes ShuffleBoard button layout presets and maps buttons accordingly
+		chooseButtonLayout.start();
 	}
 
 	/**
@@ -399,48 +284,40 @@ public class Robot extends TimedRobot{
 		SmartDashboard.putNumber("Gyro Angle", GYROSUBSYSTEM.getGyroClampedNeg180To180());
 		SmartDashboard.putNumber("Elevator Encoder Distance", RobotMap.elevatorEncoder.getDistance());
 		SmartDashboard.putNumber("Winch Encoder Distance", RobotMap.winchEncoder.getDistance());
-		//SmartDashboard.putNumber("Total Amps", RobotMap.pdp.getTotalCurrent());
-		
-		
 
-		
 		//Changes axes according to what was selected in SmartDashboard (controlType SendableChooser)
-				switch(Robot.controlType.getSelected()) {
-					case 0: //General Flightsticks (Default)
-						driveX = leftJoy.getRawAxis(0);
-						driveY = leftJoy.getRawAxis(1);
-						rotX = rightJoy.getRawAxis(0);
-						povPosition = rightJoy.getPOV();
-						break;
-					case 1: //General Xbox
-						if (Math.abs(xbox.getRawAxis(0)) > xbox360Deadzone) {driveX = xbox.getRawAxis(0); SmartDashboard.putString("Troubleshoot", "Using Xbox Joystick");} else driveX = 0;
-						if (Math.abs(xbox.getRawAxis(1)) > xbox360Deadzone) driveY = xbox.getRawAxis(1); else driveY = 0;
-						if (Math.abs(xbox.getRawAxis(4)) > xbox360Deadzone) rotX = xbox.getRawAxis(4); else rotX = 0;
-						povPosition = xbox.getPOV();
-						break;
-					case 2: //Daniel
-						driveX = xbox.getRawAxis(0);
-						driveY = xbox.getRawAxis(1);
-						rotX = xbox.getRawAxis(4);
-						povPosition = xbox.getPOV();
-						break;
-					case 3: //Hannah
-						driveX = leftJoy.getRawAxis(0);
-						driveY = leftJoy.getRawAxis(1);
-						rotX = rightJoy.getRawAxis(0);
-						povPosition = rightJoy.getPOV();
-						break;
-					case 4: //Hunter
-						driveX = leftJoy.getRawAxis(0);
-						driveY = leftJoy.getRawAxis(1);
-						rotX = rightJoy.getRawAxis(0);
-						povPosition = rightJoy.getPOV();
-						break;
-				}
-		
-				
-				
-		
+		switch(Robot.controlType.getSelected()) {
+			case 0: //General Flightsticks (Default)
+				driveX = leftJoy.getRawAxis(0);
+				driveY = leftJoy.getRawAxis(1);
+				rotX = rightJoy.getRawAxis(0);
+				povPosition = rightJoy.getPOV();
+				break;
+			case 1: //General Xbox
+				if (Math.abs(xbox.getRawAxis(0)) > xbox360Deadzone) {driveX = xbox.getRawAxis(0); SmartDashboard.putString("Troubleshoot", "Using Xbox Joystick");} else driveX = 0;
+				if (Math.abs(xbox.getRawAxis(1)) > xbox360Deadzone) driveY = xbox.getRawAxis(1); else driveY = 0;
+				if (Math.abs(xbox.getRawAxis(4)) > xbox360Deadzone) rotX = xbox.getRawAxis(4); else rotX = 0;
+				povPosition = xbox.getPOV();
+				break;
+			case 2: //Daniel
+				if (Math.abs(xbox.getRawAxis(0)) > xbox360Deadzone) {driveX = xbox.getRawAxis(0); SmartDashboard.putString("Troubleshoot", "Using Xbox Joystick");} else driveX = 0;
+				if (Math.abs(xbox.getRawAxis(1)) > xbox360Deadzone) driveY = xbox.getRawAxis(1); else driveY = 0;
+				if (Math.abs(xbox.getRawAxis(4)) > xbox360Deadzone) rotX = xbox.getRawAxis(4); else rotX = 0;
+				povPosition = xbox.getPOV();
+				break;
+			case 3: //Hannah
+				driveX = leftJoy.getRawAxis(0);
+				driveY = leftJoy.getRawAxis(1);
+				rotX = rightJoy.getRawAxis(0);
+				povPosition = rightJoy.getPOV();
+				break;
+			case 4: //Hunter
+				driveX = leftJoy.getRawAxis(0);
+				driveY = leftJoy.getRawAxis(1);
+				rotX = rightJoy.getRawAxis(0);
+				povPosition = rightJoy.getPOV();
+				break;
+		}
 		
 		//Listens for controller POV/D-pad movements, calls rotate commands based on them. Case numbers are POV/D-pad angles
 		switch (povPosition) {
@@ -481,9 +358,6 @@ public class Robot extends TimedRobot{
 		//If the elevator is raised above specified height, drivetrain speed will be reduced to quarter speed.
 		//Threshold specified in "User-Defined Variables" near top
 		if(RobotMap.elevatorEncoder.getDistance() > Robot.balanceProtectionElevatorHeight) driveBalance.start();
-		
-		//CALIBRATION ONLY
-		//swerveDrive.drive(0, OI.leftJoy.getRawAxis (1), 0); //ONLY uncomment if calibrating angle encoders
 		
 		/**
 		 * Vision Processing

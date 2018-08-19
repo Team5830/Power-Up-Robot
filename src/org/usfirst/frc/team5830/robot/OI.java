@@ -16,9 +16,14 @@ public class OI {
 	 * IMPORTANT MESSAGE!!!
 	 * In order to enable a SmartDashboard chooser for selecting between flightsticks
 	 * and Xbox joystick, all OI input initialization has been moved to commands.
+	 * 
 	 * Changes can be made in these locations:
 	 * Buttons: In ChooseButtonLayout.java command, under switch cases, names commented accordingly
-	 * Axes: in Robot > teleopPeriodic, under switch cases, names commented accordingly
+	 * Button Mappings to Commands (.whenPressed): ChooseButtonLayout under the switch case
+	 * Button Mappings to Commands (.whileHeld): Robot.teleopPeriodic
+	 * D-Pad/POV mappings: teleopPeriodic
+	 * 
+	 * Axes/D-Pad/POV: in Robot > teleopPeriodic, under switch cases, names commented accordingly
 	 * NOTE: POV/D-pad is under Axes
 	 */
 		
@@ -43,9 +48,6 @@ public class OI {
 	 * 4=R X
 	 * 5=R Y
 	 */
-	public OI() {
-		
-				//test1.whenPressed(new AutoL_LScale());
-
-	}
+	
+	public OI() {}
 }
