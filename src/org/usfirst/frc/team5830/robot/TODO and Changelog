@@ -1,3 +1,16 @@
+This file is DEPRECATED. All relevant data has been moved into Projects on GitHub.
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
   _____    ___    ____     ___  
  |_   _|  / _ \  |  _ \   / _ \ 
    | |   | | | | | | | | | | | |
@@ -66,7 +79,7 @@ OPTIONAL:
 2018/07/22 (Hunter P.): Added SmartDashboard Gyro Reset button
 2018/07/22 (Hunter P.): Converted balance protection code from limit switches to an elevator encoder distance value
 2018/07/22 (Hunter P.): Added changeable variables for LIDAR distances in Robot.java and referred auto code to them
-2018/01/06 - 2018/03/02 (Hunter P., Max P.): Suffered immense mental trauma trying to get swerve to work.  (ノಠ益ಠ)ノ彡┻━┻
+2018/01/06 - 2018/03/02 (Hunter P., Max P.): Suffered immense mental trauma trying to get swerve to work.
 
 ----------------------------------------------------------------------------------------------------
 
