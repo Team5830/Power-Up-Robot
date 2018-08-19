@@ -21,8 +21,8 @@ public class AutoMoveL_LScale extends CommandGroup {
     	 */
     	SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
     	addParallel(new WinchRelease());
-    	addSequential(new DriveToScale()); //MotionProfiling values = (<angle>, <distance>)
-    	//addSequential(new DriveMotionProfiling(90, 0));
+    	addSequential(new DriveToScale());
+    	addSequential(new DriveRotateTo90());
     	addSequential(new CubeToScale());
     	addSequential(new SpitCube());
         // Add Commands here:

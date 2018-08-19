@@ -5,18 +5,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveRotateTo90 extends Command {
+public class DriveRotateToNeg90 extends Command {
 
 	private Command localDriveMotionProfiling = new DriveMotionProfiling();
 	
-    public DriveRotateTo90() {
+    public DriveRotateToNeg90() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveMotionProfiling.driveAngle = 90;
+    	DriveMotionProfiling.driveAngle = -90;
     	DriveMotionProfiling.driveDistance = 0;
     	localDriveMotionProfiling.start();
     }

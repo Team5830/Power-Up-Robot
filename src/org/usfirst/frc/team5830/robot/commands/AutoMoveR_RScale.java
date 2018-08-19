@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5830.robot.commands;
 
-import org.usfirst.frc.team5830.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,8 +21,8 @@ public class AutoMoveR_RScale extends CommandGroup {
     	 */
     	SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
     	addParallel(new WinchRelease());
-    	addSequential(new DriveMotionProfiling(0, Robot.distanceWallToScale)); //MotionProfiling values = (<angle>, <distance>)
-    	addSequential(new DriveMotionProfiling(-90, 0));
+    	addSequential(new DriveToScale()); //MotionProfiling values = (<angle>, <distance>)
+    	addSequential(new DriveRotateToNeg90());
     	addSequential(new CubeToScale());
     	addSequential(new SpitCube());
         // Add Commands here:

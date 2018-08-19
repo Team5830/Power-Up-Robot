@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5830.robot.commands;
 
-import org.usfirst.frc.team5830.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,7 +21,7 @@ public class AutoMoveCrossAuto extends CommandGroup {
     	 */
     	SmartDashboard.putString("Autonomous Path Chosen", "Cross Auto");
     	addParallel(new WinchRelease());
-    	addSequential(new DriveMotionProfiling(0, Robot.distanceWallToAuto)); //MotionProfiling values = (<angle>, <distance>)
+    	addSequential(new DriveToAuto()); //MotionProfiling values = (<angle>, <distance>)
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

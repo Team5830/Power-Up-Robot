@@ -12,7 +12,7 @@ import org.usfirst.frc.team5830.robot.commands.CubeToGround;
 import org.usfirst.frc.team5830.robot.commands.CubeToScale;
 import org.usfirst.frc.team5830.robot.commands.CubeToSwitch;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
-import org.usfirst.frc.team5830.robot.commands.DriveMotionProfiling;
+import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
 import org.usfirst.frc.team5830.robot.commands.SuckCube;
 import org.usfirst.frc.team5830.robot.commands.TeleopSpitCube;
 import org.usfirst.frc.team5830.robot.commands.WinchRelease;
@@ -147,12 +147,12 @@ public class Robot extends TimedRobot{
 	private static Command commandSuckCube = new SuckCube();
 	private static Command commandSpitCube = new TeleopSpitCube();
 	private static Command driveBalance = new DriveBalance();
-	private static Command rotateTo0 = new DriveMotionProfiling(0, 0);
-	private static Command rotateTo45 = new DriveMotionProfiling(45, 0);
-	private static Command rotateTo90 = new DriveMotionProfiling(90, 0);
-	private static Command rotateTo180 = new DriveMotionProfiling(180, 0);
-	private static Command rotateToNeg90 = new DriveMotionProfiling(-90, 0);
-	private static Command rotateToNeg45 = new DriveMotionProfiling(-45, 0);
+	private static Command rotateTo0 = new DriveRotationSetpoint(0);
+	private static Command rotateTo45 = new DriveRotationSetpoint(45);
+	private static Command rotateTo90 = new DriveRotationSetpoint(90);
+	private static Command rotateTo180 = new DriveRotationSetpoint(180);
+	private static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
+	private static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
 	private static Command autoLogicMain = new AutoLogicMain();
 	
 	//This block was used for testing before the drive CIMcoder was installed. Same thing as DriveMotionProfiling except distance was disabled.

@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5830.robot.commands;
 
-import org.usfirst.frc.team5830.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,8 +21,8 @@ public class AutoMoveL_LSwitch extends CommandGroup {
     	 */
     	SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
     	addParallel(new WinchRelease());
-    	addSequential(new DriveMotionProfiling(0, Robot.distanceWallToSwitch)); //MotionProfiling values = (<angle>, <distance>)
-    	addSequential(new DriveMotionProfiling(90, 0));
+    	addSequential(new DriveToSwitch()); //MotionProfiling values = (<angle>, <distance>)
+    	addSequential(new DriveRotateTo90());
     	addSequential(new CubeToSwitch());
     	addSequential(new SpitCube());
         // Add Commands here:

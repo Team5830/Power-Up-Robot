@@ -21,20 +21,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveMotionProfiling extends Command {
 	
-	public static double driveMotionProfilingDistanceTolerance;
+	public static double driveMotionProfilingDistanceTolerance = 2;
 	
 	private int loopCount = 0;
-	private double localAngle;
-	public static double driveMotionProfilingDistance;
+	public static double driveAngle;
+	public static double driveDistance;
 
 	//Negative angle numbers allowed. Negative distance numbers NOT ALLOWED. Instead, have the robot rotate away then move forward.
-    public DriveMotionProfiling(double angle, double distance) {//TODO Make sure variables get passed properly
+	
+	//I (Hunter P.) would have LOVED to make the variables set directly when command is called, but CommandGroups don't support
+	//two of the same command but with different variables. Stupid. Now they have to be set separately in another command.
+    public DriveMotionProfiling() {
     	super ("DriveMotionProfiling");
     	
     	//requires(Robot.WHEELDISTANCEPID);
     	requires(Robot.swerveDrive);
-    	localAngle = angle;
-    	driveMotionProfilingDistance = distance;
+    	//localAngle = angle;
+    	//driveMotionProfilingDistance = distance;
     }
 
     // Called just before this Command runs the first time
@@ -52,7 +55,7 @@ public class DriveMotionProfiling extends Command {
     	if(Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) > 5) {//TODO set tolerance (currently 5)
     		SmartDashboard.putString("Autonomous Status", "I got to MotionProfiling Stage 1");
     		//Gets the angle requested by the command start variable and sets the PID loop to it, then enables it
-        	Robot.auto_GYRO_Correction_Swerve.setSetpoint(localAngle);
+        	Robot.auto_GYRO_Correction_Swerve.setSetpoint(driveAngle);
         	Robot.auto_GYRO_Correction_Swerve.enable();
         	Robot.swerveDrive.drive(0, 0, Robot.pidOutputAngle);
         	SmartDashboard.putNumber("AutoGyroNumber", Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()));
@@ -65,8 +68,8 @@ public class DriveMotionProfiling extends Command {
     		//Cannot place in initialize() because it needs to reset once only after gyro PID has completed its rotation
         	if (loopCount <= 1) RobotMap.wheelEncoder1.reset();
     		
-        	SmartDashboard.putNumber("LocalDistance", driveMotionProfilingDistance);
-        	if(RobotMap.wheelEncoder1.getDistance() < driveMotionProfilingDistance) {
+        	SmartDashboard.putNumber("LocalDistance", driveDistance);
+        	if(RobotMap.wheelEncoder1.getDistance() < driveDistance) {
         		Robot.swerveDrive.drive(0, 0.5, 0);
         		SmartDashboard.putString("Autonomous Status", "I got to Driving");
         	} else { 
@@ -79,7 +82,7 @@ public class DriveMotionProfiling extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Only is finished when both distance and angle setpoints have been met
-        return Math.abs(RobotMap.wheelEncoder1.getDistance() - driveMotionProfilingDistance) < driveMotionProfilingDistanceTolerance && Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) < 5 && Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) > (0 - 3);
+        return Math.abs(RobotMap.wheelEncoder1.getDistance() - driveDistance) < driveMotionProfilingDistanceTolerance && Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) < 5 && Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) > (0 - 3);
     	//return false;
     }
 

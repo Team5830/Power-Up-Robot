@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveToSwitch extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling(0, Robot.distanceWallToSwitch);
+	private Command localDriveMotionProfiling = new DriveMotionProfiling();
 	
     public DriveToSwitch() {
         // Use requires() here to declare subsystem dependencies
@@ -18,6 +18,8 @@ public class DriveToSwitch extends Command {
     
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	DriveMotionProfiling.driveAngle = 0;
+    	DriveMotionProfiling.driveDistance = Robot.distanceWallToSwitch;
     	localDriveMotionProfiling.start();
     }
 

@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5830.robot.commands;
 
-import org.usfirst.frc.team5830.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,10 +22,9 @@ public class AutoMoveC_RSwitch extends CommandGroup {
     	 */
     	SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
     	addParallel(new WinchRelease());
-    	addSequential(new DriveMotionProfiling(0, 10));
-    	addSequential(new DriveMotionProfiling(45, Robot.distanceCWallToSwitch));
+    	addParallel(new DriveStrafeToRSwitch());
     	addSequential(new CubeToSwitch());
-    	addSequential(new DriveMotionProfiling(0, 10));
+    	addSequential(new DriveCloserToSwitch());
     	addSequential(new SpitCube());
         // Add Commands here:
         // e.g. addSequential(new Command1());
