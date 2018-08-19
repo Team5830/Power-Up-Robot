@@ -8,9 +8,10 @@
 package org.usfirst.frc.team5830.robot;
 
 import org.usfirst.frc.team5830.robot.commands.AutoLogicMain;
-import org.usfirst.frc.team5830.robot.commands.ChooseButtonLayout;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
 import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
+import org.usfirst.frc.team5830.robot.commands.JoystickMappingInit;
+import org.usfirst.frc.team5830.robot.commands.JoystickMappingPeriodic;
 import org.usfirst.frc.team5830.robot.commands.SuckCube;
 import org.usfirst.frc.team5830.robot.commands.TeleopSpitCube;
 import org.usfirst.frc.team5830.robot.subsystems.GyroSubsystem;
@@ -25,9 +26,6 @@ import org.usfirst.frc.team5830.robot.subsystems.SwerveDrive;
 import org.usfirst.frc.team5830.robot.subsystems.WheelDrive;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -59,14 +57,16 @@ public class Robot extends TimedRobot{
 	public static final double distanceCWallToSwitch = 130;//Inches //TODO Calibrate value - this value is arbitrary
 	//Balance protection elevator height theshold
 	public static final double balanceProtectionElevatorHeight = 1000; //For comparison, ground height is ~300, full raise is ~6000
-	//Xbox 360 stick deadzone size. 1 is entire range, 0 is disabled, closer to zero means less deadzone
-	private static final double xbox360Deadzone = 0.1;
+	//Xbox controller stick deadzone size. 1 is entire range, 0 is disabled, closer to zero means less deadzone
+	public static final double xboxStickDeadzone = 0.1;
+	//Xbox controller trigger deadzone size. 1 is entire range, 0 is disabled, closer to zero means less deadzone
+	public static final double xboxTriggerDeadzone = 0.2;
 	//Distance from LIDAR cube has to be to switch intake from sucking to spitting
 	public static final double cubeDistance = 6; //Inches
 	//Maximum elevator speed up
-	public static final double maxElevatorSpeedUp = 1; //Between 0 and 1
+	public static final double maxElevatorSpeedUp = 1; //Between 0 and 1. NEGATIVE NUMBERS WILL NOT WORK!
 	//Maximum elevator speed up
-	public static final double maxElevatorSpeedDown = -0.75; //Between -1 and 0
+	public static final double maxElevatorSpeedDown = -0.75; //Between -1 and 0. POSITIVE NUMBERS WILL NOT WORK!
 	
 	/**
 	 * System-Defined Variables
@@ -93,6 +93,8 @@ public class Robot extends TimedRobot{
 	public static Button buttonCubeToGround1;
 	public static Button buttonCubeToGround2;
 	public static Button buttonWinchRelease;
+	public static Button buttonPortalL;
+	public static Button buttonPortalR;
 	
 	//Misc
 	public static Command autonomousCommand;
@@ -111,11 +113,11 @@ public class Robot extends TimedRobot{
 	public static WheelDrive frontLeft = new WheelDrive (6, 7, 3);
 	public static SwerveDrive swerveDrive = new SwerveDrive (backRight, backLeft, frontRight, frontLeft);
 	
-	//Vision Processing
-	public NetworkTableEntry visionX;
+	//Vision Processing (For future use)
+	/*public NetworkTableEntry visionX;
 	public NetworkTableEntry visionY;
 	private NetworkTableInstance inst = NetworkTableInstance.getDefault();
-	private NetworkTable table = inst.getTable("grip");//TODO Change to match GRIP output, as well as in teleopPeriodic
+	private NetworkTable table = inst.getTable("grip");*/
 	
 	/**
 	 * Subsystems
@@ -139,15 +141,16 @@ public class Robot extends TimedRobot{
 	/**
 	 * Commands
 	 */
-	private static Command chooseButtonLayout = new ChooseButtonLayout();
-	private static Command commandSuckCube = new SuckCube();
-	private static Command commandSpitCube = new TeleopSpitCube();
+	private static Command joystickMappingInit = new JoystickMappingInit();
+	private static Command joystickMappingPeriodic = new JoystickMappingPeriodic();
+	public static Command commandSuckCube = new SuckCube();
+	public static Command commandSpitCube = new TeleopSpitCube();
 	private static Command driveBalance = new DriveBalance();
-	private static Command rotateTo0 = new DriveRotationSetpoint(0);
+	public static Command rotateTo0 = new DriveRotationSetpoint(0);
 	public static Command rotateTo45 = new DriveRotationSetpoint(45);
-	private static Command rotateTo90 = new DriveRotationSetpoint(90);
-	private static Command rotateTo180 = new DriveRotationSetpoint(180);
-	private static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
+	public static Command rotateTo90 = new DriveRotationSetpoint(90);
+	public static Command rotateTo180 = new DriveRotationSetpoint(180);
+	public static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
 	public static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
 	private static Command autoLogicMain = new AutoLogicMain();
 	
@@ -270,7 +273,7 @@ public class Robot extends TimedRobot{
 		}
 		
 		//Takes ShuffleBoard button layout presets and maps buttons accordingly
-		chooseButtonLayout.start();
+		joystickMappingInit.start();
 	}
 
 	/**
@@ -280,72 +283,13 @@ public class Robot extends TimedRobot{
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
+		//Processes axis values
+		joystickMappingPeriodic.start();
+		
 		//SmartDashboard data publishing
 		SmartDashboard.putNumber("Gyro Angle", GYROSUBSYSTEM.getGyroClampedNeg180To180());
 		SmartDashboard.putNumber("Elevator Encoder Distance", RobotMap.elevatorEncoder.getDistance());
 		SmartDashboard.putNumber("Winch Encoder Distance", RobotMap.winchEncoder.getDistance());
-
-		//Changes axes according to what was selected in SmartDashboard (controlType SendableChooser)
-		switch(Robot.controlType.getSelected()) {
-			case 0: //General Flightsticks (Default)
-				driveX = leftJoy.getRawAxis(0);
-				driveY = leftJoy.getRawAxis(1);
-				rotX = rightJoy.getRawAxis(0);
-				povPosition = rightJoy.getPOV();
-				break;
-			case 1: //General Xbox
-				if (Math.abs(xbox.getRawAxis(0)) > xbox360Deadzone) {driveX = xbox.getRawAxis(0); SmartDashboard.putString("Troubleshoot", "Using Xbox Joystick");} else driveX = 0;
-				if (Math.abs(xbox.getRawAxis(1)) > xbox360Deadzone) driveY = xbox.getRawAxis(1); else driveY = 0;
-				if (Math.abs(xbox.getRawAxis(4)) > xbox360Deadzone) rotX = xbox.getRawAxis(4); else rotX = 0;
-				povPosition = xbox.getPOV();
-				break;
-			case 2: //Daniel
-				if (Math.abs(xbox.getRawAxis(0)) > xbox360Deadzone) {driveX = xbox.getRawAxis(0); SmartDashboard.putString("Troubleshoot", "Using Xbox Joystick");} else driveX = 0;
-				if (Math.abs(xbox.getRawAxis(1)) > xbox360Deadzone) driveY = xbox.getRawAxis(1); else driveY = 0;
-				if (Math.abs(xbox.getRawAxis(4)) > xbox360Deadzone) rotX = xbox.getRawAxis(4); else rotX = 0;
-				povPosition = xbox.getPOV();
-				break;
-			case 3: //Hannah
-				driveX = leftJoy.getRawAxis(0);
-				driveY = leftJoy.getRawAxis(1);
-				rotX = rightJoy.getRawAxis(0);
-				povPosition = rightJoy.getPOV();
-				break;
-			case 4: //Hunter
-				driveX = leftJoy.getRawAxis(0);
-				driveY = leftJoy.getRawAxis(1);
-				rotX = rightJoy.getRawAxis(0);
-				povPosition = rightJoy.getPOV();
-				break;
-		}
-		
-		//Listens for controller POV/D-pad movements, calls rotate commands based on them. Case numbers are POV/D-pad angles
-		switch (povPosition) {
-			case 0: 
-				rotateTo0.start();
-				SmartDashboard.putString("0 Setpoint?", "Oh yeah!");
-				break;
-			case 45:
-				rotateTo45.start();
-				break;
-			case 90:
-				rotateTo90.start();
-				break;
-			case 180:
-				rotateTo180.start();
-				break;
-			case 270:
-				rotateToNeg90.start();
-				break;
-			case 315:
-				rotateToNeg45.start();
-				break;
-		}
-		
-		//Links triggers to cube functions
-		//This weird format fixes the bug where the wheels would only spin for one tick, or not spin at all. Basically whileHeld in a raw format
-		if(button1.get()) commandSuckCube.start(); else commandSuckCube.cancel();
-		if(button2.get()) commandSpitCube.start(); else commandSpitCube.cancel();
 		
 		SmartDashboard.putNumber("POV Position", xbox.getPOV());
 		
@@ -360,10 +304,10 @@ public class Robot extends TimedRobot{
 		if(RobotMap.elevatorEncoder.getDistance() > Robot.balanceProtectionElevatorHeight) driveBalance.start();
 		
 		/**
-		 * Vision Processing
+		 * Vision Processing (For future use)
 		 */
-		visionX = table.getEntry("X");
-		visionY = table.getEntry("Y");
+		//visionX = table.getEntry("X");
+		//visionY = table.getEntry("Y");
 	}
 
 	/**

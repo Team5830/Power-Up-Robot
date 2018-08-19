@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  * then creates and maps joystick buttons. Axes definition in Robot.teleopPeriodic
  */
 
-public class ChooseButtonLayout extends InstantCommand {
+public class JoystickMappingInit extends InstantCommand {
 	
 
-    public ChooseButtonLayout() {}
+    public JoystickMappingInit() {}
     
     protected void execute() {
     	//There is no isFinished defined because this is an InstantCommand. 
@@ -34,24 +34,43 @@ public class ChooseButtonLayout extends InstantCommand {
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
 				Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
 				Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
+				
+				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
+				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
+				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
+				Robot.buttonWinchRelease.whenPressed(new WinchRelease());
 				break;
 			case 1: //General Xbox
 				Robot.xbox = new Joystick(2);
-				Robot.button1 = new JoystickButton(Robot.xbox, 6);            //LB
-				Robot.button2 = new JoystickButton(Robot.xbox, 5);            //RB
+				Robot.buttonPortalL = new JoystickButton(Robot.xbox,5);       //LB
+				Robot.buttonPortalR = new JoystickButton(Robot.xbox,6);       //RB
 				Robot.buttonCubeToScale = new JoystickButton(Robot.xbox,4);   //Y
 				Robot.buttonCubeToSwitch = new JoystickButton(Robot.xbox,2);  //B
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.xbox,1); //A
 				Robot.buttonWinchRelease = new JoystickButton(Robot.xbox,3);  //X
+				
+				Robot.buttonPortalL.whenPressed(new CubeToPortalL());
+				Robot.buttonPortalR.whenPressed(new CubeToPortalR());
+				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
+				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
+				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
+				Robot.buttonWinchRelease.whenPressed(new WinchRelease());
 				break;
 			case 2: //Daniel
 				Robot.xbox = new Joystick(2);
-				Robot.button1 = new JoystickButton(Robot.xbox, 6);            //LB
-				Robot.button2 = new JoystickButton(Robot.xbox, 5);            //RB
+				Robot.buttonPortalL = new JoystickButton(Robot.xbox,5);       //LB
+				Robot.buttonPortalR = new JoystickButton(Robot.xbox,6);       //RB
 				Robot.buttonCubeToScale = new JoystickButton(Robot.xbox,4);   //Y
 				Robot.buttonCubeToSwitch = new JoystickButton(Robot.xbox,2);  //B
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.xbox,1); //A
 				Robot.buttonWinchRelease = new JoystickButton(Robot.xbox,3);  //X
+				
+				Robot.buttonPortalL.whenPressed(new CubeToPortalL());
+				Robot.buttonPortalR.whenPressed(new CubeToPortalR());
+				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
+				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
+				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
+				Robot.buttonWinchRelease.whenPressed(new WinchRelease());
 				break;
 			case 3: //Hannah
 				Robot.leftJoy = new Joystick(0);
@@ -63,6 +82,11 @@ public class ChooseButtonLayout extends InstantCommand {
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
 				Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
 				Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
+				
+				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
+				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
+				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
+				Robot.buttonWinchRelease.whenPressed(new WinchRelease());
 				break;
 			case 4: //Hunter
 				Robot.leftJoy = new Joystick(0);
@@ -74,11 +98,13 @@ public class ChooseButtonLayout extends InstantCommand {
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.rightJoy,3); //(Top) Lower Left
 				Robot.buttonCubeToGround2 = new JoystickButton(Robot.rightJoy,4); //(Top) Lower Right
 				Robot.buttonWinchRelease = new JoystickButton(Robot.rightJoy,11);
+				
+				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
+				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
+				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
+				Robot.buttonWinchRelease.whenPressed(new WinchRelease());
 				break;
 			}
-		Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
-		Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
-		Robot.buttonCubeToScale.whenPressed(new CubeToScale());
-		Robot.buttonWinchRelease.whenPressed(new WinchRelease());
+		
     }
 }

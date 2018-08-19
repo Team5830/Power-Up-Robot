@@ -18,13 +18,11 @@ public class OI {
 	 * and Xbox joystick, all OI input initialization has been moved to commands.
 	 * 
 	 * Changes can be made in these locations:
-	 * Buttons: In ChooseButtonLayout.java command, under switch cases, names commented accordingly
-	 * Button Mappings to Commands (.whenPressed): ChooseButtonLayout under the switch case
-	 * Button Mappings to Commands (.whileHeld): Robot.teleopPeriodic
-	 * D-Pad/POV mappings: teleopPeriodic
-	 * 
-	 * Axes/D-Pad/POV: in Robot > teleopPeriodic, under switch cases, names commented accordingly
-	 * NOTE: POV/D-pad is under Axes
+	 * Button initialization: JoystickMappingInit.java
+	 * Button .whenPressed mapping: JoystickMappingInit.java
+	 * Button .whileHeld mapping: JoystickMappingPeriodic.java //NOTE: .whileHeld doesn't work with chooser. Instead use if(button.get) command.start; else command.cancel;
+	 * D-Pad/POV: JoystickMappingPeriodic.java
+	 * Axes: JoystickMappingPeriodic.java
 	 */
 		
 	/*
