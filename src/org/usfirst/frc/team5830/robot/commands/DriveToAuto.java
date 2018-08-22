@@ -3,6 +3,7 @@ package org.usfirst.frc.team5830.robot.commands;
 import org.usfirst.frc.team5830.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -18,6 +19,7 @@ public class DriveToAuto extends Command {
     }
     
     protected void execute() {
+    	SmartDashboard.putString("Status", "Driving to Auto Line");
     	DriveMotionProfiling.driveAngle = 0;
     	DriveMotionProfiling.driveDistance = Robot.distanceWallToAuto;
     	localDriveMotionProfiling.start();
@@ -25,5 +27,9 @@ public class DriveToAuto extends Command {
 
     protected boolean isFinished() {
         return localDriveMotionProfiling.isCompleted();
+    }
+    
+    protected void end() {
+    	SmartDashboard.putString("Status", "Waiting for next command");
     }
 }

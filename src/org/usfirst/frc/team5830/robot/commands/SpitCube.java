@@ -19,14 +19,13 @@ public class SpitCube extends InstantCommand {
 
     protected void execute() {
     	SmartDashboard.putString("Status", "Spitting Cube");
-    	SmartDashboard.putString("Autonomous Status", "Spitting Cube");
     	Robot.POWERCUBE.out();
     	Timer.delay(1);
     	Robot.POWERCUBE.stop();
     }
 
     protected void end() {
-    	SmartDashboard.putString("Autonomous Status", "END");
+    	SmartDashboard.putString("Status", "Waiting for next command");
     }
 
     protected void interrupted() {

@@ -204,6 +204,15 @@ public class Robot extends TimedRobot{
 		controlType.addObject("Hunter (Flightsticks)", 4);
 		SmartDashboard.putData("Control Method", controlType);
 		
+		//Displays whether or not Balance Protection is enabled via a color changing "Boolean Box" in Shuffleboard
+		SmartDashboard.putBoolean("Balance Protection enabled?", false);
+		
+		//Lets the driver know which autonomous path was chosen automatically
+		SmartDashboard.putString("Autonomous Path Chosen", "Waiting for Match Start");
+		
+		//Shows current robot command running
+		SmartDashboard.putString("Status", "Waiting for Match Start");
+		
 		/**
 		 * Sensor Calibration/Setup
 		 */
@@ -219,7 +228,8 @@ public class Robot extends TimedRobot{
 
 	@Override
 	public void disabledInit() {
-		SmartDashboard.putString("Autonomous Status", "DISABLED");
+		SmartDashboard.putString("Status", "Waiting for Match Start");
+		SmartDashboard.putString("Autonomous Path Chosen", "Waiting for Match Start");
 		isFieldOriented = false;
 	}
 
@@ -256,8 +266,9 @@ public class Robot extends TimedRobot{
 	public void teleopInit() {
 		if (autoLogicMain != null) {
 			autoLogicMain.cancel();
-			SmartDashboard.putString("Autonomous Status", "Teleop Enabled");
 		}
+		
+		SmartDashboard.putString("Status", "Teleop Driving");
 		
 		//Takes ShuffleBoard button layout presets and maps buttons accordingly
 		joystickMappingInit.start();
@@ -271,11 +282,6 @@ public class Robot extends TimedRobot{
 		joystickMappingPeriodic.start();
 		
 		//SmartDashboard data publishing
-		SmartDashboard.putNumber("Gyro Angle", GYROSUBSYSTEM.getGyroClampedNeg180To180());
-		SmartDashboard.putNumber("Elevator Encoder Distance", RobotMap.elevatorEncoder.getDistance());
-		SmartDashboard.putNumber("Winch Encoder Distance", RobotMap.winchEncoder.getDistance());
-		
-		SmartDashboard.putNumber("POV Position", xbox.getPOV());
 		
 		//Enables SmartDashboard driveType chooser
 		isFieldOriented = SmartDashboard.getBoolean("Field Oriented?", false);
@@ -285,7 +291,12 @@ public class Robot extends TimedRobot{
 		 */
 		//If the elevator is raised above specified height, drivetrain speed will be reduced to quarter speed.
 		//Threshold specified in "User-Defined Variables" near top
-		if(RobotMap.elevatorEncoder.getDistance() > Robot.balanceProtectionElevatorHeight) driveBalance.start();
+		if(RobotMap.elevatorEncoder.getDistance() > Robot.balanceProtectionElevatorHeight) {
+			driveBalance.start();
+			SmartDashboard.putBoolean("Balance Protection enabled?", true);//Changes color of "Bal. Protection?" boolean box in Shuffleboard to notify the driver
+		} else {
+			SmartDashboard.putBoolean("Balance Protection enabled?", false);
+		}
 		
 		/**
 		 * Vision Processing (For future use)
@@ -296,6 +307,7 @@ public class Robot extends TimedRobot{
 
 	@Override
 	public void testPeriodic() {
+		SmartDashboard.putString("Status", "TEST MODE");
 		swerveDrive.drive(0, pidOutputWheel, pidOutputAngle);
 	}
 }

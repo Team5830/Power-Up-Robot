@@ -4,6 +4,7 @@ import org.usfirst.frc.team5830.robot.Robot;
 import org.usfirst.frc.team5830.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -23,6 +24,7 @@ public class DriveStrafeToLSwitch extends Command {
     }
 
     protected void execute() {
+    	SmartDashboard.putString("Status", "Driving to Left Switch");
     	if(Math.abs(Robot.distanceCWallToSwitch - RobotMap.wheelEncoder1.getDistance()) < 2) Robot.swerveDrive.drive(-0.25, 0.5, 0);
     	else {
     		Robot.swerveDrive.drive(0, 0, 0);
@@ -35,7 +37,8 @@ public class DriveStrafeToLSwitch extends Command {
     }
 
     protected void end() {
-    	isItFinished = false;
+        SmartDashboard.putString("Status", "Waiting for next command");
+        isItFinished = false;
     }
 
     protected void interrupted() {

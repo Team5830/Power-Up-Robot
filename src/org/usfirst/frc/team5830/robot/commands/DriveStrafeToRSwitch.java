@@ -4,6 +4,7 @@ import org.usfirst.frc.team5830.robot.Robot;
 import org.usfirst.frc.team5830.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -18,13 +19,12 @@ public class DriveStrafeToRSwitch extends Command {
     	requires(Robot.swerveDrive);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	RobotMap.wheelEncoder1.reset();
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("Status", "Driving to Right Switch");
     	if(Math.abs(Robot.distanceCWallToSwitch - RobotMap.wheelEncoder1.getDistance()) < 2) Robot.swerveDrive.drive(0.25, 0.5, 0);
     	else {
     		Robot.swerveDrive.drive(0, 0, 0);
@@ -32,18 +32,15 @@ public class DriveStrafeToRSwitch extends Command {
     	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return isItFinished;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
-    	isItFinished = false;
+        SmartDashboard.putString("Status", "Waiting for next command");
+        isItFinished = false;
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     	isItFinished = false;
     }

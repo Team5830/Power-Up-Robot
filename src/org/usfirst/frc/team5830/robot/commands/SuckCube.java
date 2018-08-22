@@ -31,10 +31,12 @@ public class SuckCube extends Command {
     }
 
     protected void end() {
+    	SmartDashboard.putString("Status", "Teleop Driving");
     	Robot.POWERCUBE.stop();
     }
 
     protected void interrupted() {
+    	SmartDashboard.putString("Status", "Teleop Driving");
     	Robot.POWERCUBE.stop();
     }
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team5830.robot.commands;
 import org.usfirst.frc.team5830.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -17,15 +18,18 @@ public class DriveToScale extends Command {
     	requires(Robot.swerveDrive);
     }
     
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("Status", "Driving to Scale");
     	DriveMotionProfiling.driveAngle = 0;
     	DriveMotionProfiling.driveDistance = Robot.distanceWallToScale;
     	localDriveMotionProfiling.start();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return localDriveMotionProfiling.isCompleted();
+    }
+    
+    protected void end() {
+    	SmartDashboard.putString("Status", "Waiting for next command");
     }
 }

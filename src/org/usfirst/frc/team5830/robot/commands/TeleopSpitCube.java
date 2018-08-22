@@ -19,7 +19,7 @@ public class TeleopSpitCube extends Command {
     protected void execute() {
     	SmartDashboard.putString("Status", "Spitting Cube");
     	if(Robot.lidarSubsystem.getDistanceIn(false) <= Robot.cubeDistance) Robot.POWERCUBE.out();
-    	else if(SmartDashboard.getBoolean("Override Intake Sensor", false)) Robot.POWERCUBE.out();
+    	else if(SmartDashboard.getBoolean("Override Intake Sensor", true)) Robot.POWERCUBE.out();
     }
 
     protected boolean isFinished() {
@@ -27,10 +27,12 @@ public class TeleopSpitCube extends Command {
     }
 
     protected void end() {
+    	SmartDashboard.putString("Status", "Telop Driving");
     	Robot.POWERCUBE.stop();
     }
 
     protected void interrupted() {
+    	SmartDashboard.putString("Status", "Telop Driving");
     	Robot.POWERCUBE.stop();
     }
 }
