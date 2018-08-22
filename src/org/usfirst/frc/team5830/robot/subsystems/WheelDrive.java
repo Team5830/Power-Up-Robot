@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Talon;
  * @author Jacob Misirian
  * https://jacobmisirian.gitbooks.io/frc-swerve-drive-programming/content/
  *
- * Max Pugh implemented
+ * Max P. implemented
  */
 
 public class WheelDrive {

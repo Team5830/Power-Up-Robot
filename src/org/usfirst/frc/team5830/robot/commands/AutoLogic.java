@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutoLogicMain extends InstantCommand {
+public class AutoLogic extends InstantCommand {
 	
 	String gameData;
 	Command autoMoveC_LSwitch = new AutoMoveC_LSwitch();
@@ -21,8 +21,7 @@ public class AutoLogicMain extends InstantCommand {
 	Command autoMoveR_RScale = new AutoMoveR_RScale();
 	Command autoMoveR_RSwitch = new AutoMoveR_RSwitch();
 
-    public AutoLogicMain() {
-    	}
+    public AutoLogic() {}
     
     protected void execute() {
     	//There is no isFinished defined because this is an InstantCommand. 
@@ -36,22 +35,23 @@ public class AutoLogicMain extends InstantCommand {
     		
     		switch (Robot.autoPosition.getSelected()){
     			case "Left":
-    				SmartDashboard.putString("Autonomous Status", "I got to Left");
     				switch (Robot.autoChooser.getSelected()) {
     					case "Scale":
-    						SmartDashboard.putString("Autonomous Status", "I got to Left and Scale");
     						switch (gameData) {
     							case "LLL":
-    								SmartDashboard.putString("Autonomous Status", "I got to Left and Scale and LLL");
+    								SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
     								autoMoveL_LScale.start();
     								break;
     							case "RRR":
+    								SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
     								autoMoveCrossAuto.start();
     								break;
     							case "LRL":
+    								SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
     								autoMoveL_LSwitch.start();
     								break;
     							case "RLR":
+    								SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
     								autoMoveL_LScale.start();
     								break;
     						}
@@ -59,15 +59,19 @@ public class AutoLogicMain extends InstantCommand {
     					case "ScaleOnly":
     						switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
 									autoMoveL_LScale.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
 									autoMoveL_LScale.start();
 									break;
     						}
@@ -75,15 +79,19 @@ public class AutoLogicMain extends InstantCommand {
     					case "Switch":
     						switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveL_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveL_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
 									autoMoveL_LScale.start();
 									break;
     						}
@@ -91,20 +99,25 @@ public class AutoLogicMain extends InstantCommand {
     					case "SwitchOnly":
     						switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveL_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveL_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Scale");
 									autoMoveL_LScale.start();
 									break;
     						}
     						break;
     					case "CrossAuto":
+    						SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
     						autoMoveCrossAuto.start();
     						break;
     						
@@ -116,15 +129,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "Scale":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 							}
@@ -132,15 +149,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "ScaleOnly":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 							}
@@ -148,15 +169,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "Switch":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 							}
@@ -164,20 +189,25 @@ public class AutoLogicMain extends InstantCommand {
 						case "SwitchOnly":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Left Switch");
 									autoMoveC_LSwitch.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveC_RSwitch.start();
 									break;
 							}
 							break;
 						case "CrossAuto":
+							SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 							autoMoveCrossAuto.start();
 							break;
     				}//END Center > Auto Mode Switch
@@ -187,15 +217,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "Scale":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
 									autoMoveR_RScale.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
 									autoMoveR_RScale.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveR_RSwitch.start();
 									break;
 							}
@@ -203,15 +237,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "ScaleOnly":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
 									autoMoveR_RScale.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
 									autoMoveR_RScale.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 							}
@@ -219,15 +257,19 @@ public class AutoLogicMain extends InstantCommand {
 						case "Switch":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveR_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Scale");
 									autoMoveR_RScale.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveR_RSwitch.start();
 									break;
 							}
@@ -235,20 +277,25 @@ public class AutoLogicMain extends InstantCommand {
 						case "SwitchOnly":
 							switch (gameData) {
 								case "LLL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RRR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveR_RSwitch.start();
 									break;
 								case "LRL":
+									SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 									autoMoveCrossAuto.start();
 									break;
 								case "RLR":
+									SmartDashboard.putString("Autonomous Path Chosen", "Right Switch");
 									autoMoveR_RSwitch.start();
 									break;
 							}
 							break;
 						case "CrossAuto":
+							SmartDashboard.putString("Autonomous Path Chosen", "Crossing Auto");
 							autoMoveCrossAuto.start();
 							break;
 						

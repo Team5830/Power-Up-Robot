@@ -6,6 +6,8 @@ import org.usfirst.frc.team5830.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class DriveStrafeToRSwitch extends Command {
@@ -14,8 +16,6 @@ public class DriveStrafeToRSwitch extends Command {
 
     public DriveStrafeToRSwitch() {
     	requires(Robot.swerveDrive);
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time

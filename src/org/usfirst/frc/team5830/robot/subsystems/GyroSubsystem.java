@@ -5,20 +5,16 @@ import org.usfirst.frc.team5830.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class GyroSubsystem extends Subsystem {
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	
 	private double gyroAngleClamped;
 	private double gyroAngleClampedShifted;
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+    public void initDefaultCommand() {}
     
     //Converts the absolute gyro value to one between -180 and 180
     //Divides the gyro angle by 360 and uses the remainder as the return value

@@ -5,6 +5,8 @@ import org.usfirst.frc.team5830.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class DriveToScale extends Command {
@@ -12,8 +14,7 @@ public class DriveToScale extends Command {
 	private Command localDriveMotionProfiling = new DriveMotionProfiling();
 	
     public DriveToScale() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.swerveDrive);
     }
     
     // Called repeatedly when this Command is scheduled to run

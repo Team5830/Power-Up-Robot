@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
- * @author Hunter Pugh
+ * @author Hunter P.
  * 
  */
 
@@ -40,14 +40,10 @@ public class DriveMotionProfiling extends Command {
     	//driveMotionProfilingDistance = distance;
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	SmartDashboard.putString("Status", "Automatically Driving");
-    	
-    	
     }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putString("Auto Rotation Angle", "All the way!");
     	
@@ -97,10 +93,5 @@ public class DriveMotionProfiling extends Command {
     	Robot.auto_GYRO_Correction_Swerve.disable();
     	Robot.swerveDrive.drive(0, 0, 0);
     	//Robot.WHEELDISTANCEPID.disable();
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
     }
 }

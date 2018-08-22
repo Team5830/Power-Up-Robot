@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team5830.robot;
 
-import org.usfirst.frc.team5830.robot.commands.AutoLogicMain;
+import org.usfirst.frc.team5830.robot.commands.AutoLogic;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
 import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
 import org.usfirst.frc.team5830.robot.commands.JoystickMappingInit;
@@ -124,7 +124,6 @@ public class Robot extends TimedRobot{
 	 */
 	
 	//Regular
-	//public static final Elevator ELEVATOR = new Elevator();
 	public static final PowerCube POWERCUBE = new PowerCube();
 	
 	//LIDAR
@@ -152,7 +151,7 @@ public class Robot extends TimedRobot{
 	public static Command rotateTo180 = new DriveRotationSetpoint(180);
 	public static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
 	public static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
-	private static Command autoLogicMain = new AutoLogicMain();
+	private static Command autoLogicMain = new AutoLogic();
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -218,11 +217,6 @@ public class Robot extends TimedRobot{
 
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
 	@Override
 	public void disabledInit() {
 		SmartDashboard.putString("Autonomous Status", "DISABLED");
@@ -251,15 +245,8 @@ public class Robot extends TimedRobot{
 		//Forces drivetrain into Robot-Oriented drive for auto
 		isFieldOriented = false;
 		autoLogicMain.start();
-		
-		/*autonomousCommand = (Command) chooser.getSelected();
-		if (autonomousCommand != null) autonomousCommand.start();*/
 		}
 	
-
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -276,9 +263,6 @@ public class Robot extends TimedRobot{
 		joystickMappingInit.start();
 	}
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -310,9 +294,6 @@ public class Robot extends TimedRobot{
 		//visionY = table.getEntry("Y");
 	}
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
 	@Override
 	public void testPeriodic() {
 		swerveDrive.drive(0, pidOutputWheel, pidOutputAngle);

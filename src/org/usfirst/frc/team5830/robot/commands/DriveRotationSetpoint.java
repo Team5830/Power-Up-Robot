@@ -7,16 +7,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
- * @author Hunter Pugh
+ * @author Hunter P.
  * 
  */
 
 /**
  * How to use this command for autonomous:
  * Call command like:
- * 		new MotionProfiling(<angle>, <distance>);
+ * 		new MotionProfiling(<angle>);
  * <angle> refers to the absolute angle setpoint in degrees, a value between -180 and 180 with 0 facing directly away from the alliance wall.
- * <distance> refers to the amount in inches the robot will move after rotating to the <angle>.
  */
 public class DriveRotationSetpoint extends Command {
 	

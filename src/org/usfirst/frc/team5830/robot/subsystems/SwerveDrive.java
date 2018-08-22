@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author Jacob Misirian
  * https://jacobmisirian.gitbooks.io/frc-swerve-drive-programming/content/
  *
- * Max Pugh implemented
+ * Max P. implemented
  */
 
 public class SwerveDrive extends Subsystem {

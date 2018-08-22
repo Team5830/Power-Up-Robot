@@ -3,8 +3,11 @@ package org.usfirst.frc.team5830.robot.commands;
 import org.usfirst.frc.team5830.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class ElevatorToSwitch extends Command {
@@ -21,6 +24,7 @@ public class ElevatorToSwitch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putString("Status", "Raising Cube to Switch");
     	Robot.ELEVATORPID.setSetpoint(2000);
     	Robot.ELEVATORPID.enable();
     }

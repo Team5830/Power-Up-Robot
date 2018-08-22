@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  * 
- * @author Hunter Pugh
+ * @author Hunter P.
  * DEPRECATED! To avoid nullPointerExceptions, this code was moved directly into teleopInit. Still have no idea why that worked.
  * Gets the status of the SmartDashboard chooser for Joystick Input, 
  * then creates and maps joystick buttons. Axes definition in Robot.teleopPeriodic
@@ -22,6 +22,7 @@ public class JoystickMappingInit extends InstantCommand {
     protected void execute() {
     	//There is no isFinished defined because this is an InstantCommand. 
     	//An InstantCommand is just shorthand for returning true in isFinished, meaning execute will only run once.
+    	
     	//Initiates command to call buttons according to the option selected on SmartDashboard (Command name = ChooseButtonLayout)
 		switch (Robot.controlType.getSelected()) {
 			case 0: //General Flightsticks (Default)

@@ -5,6 +5,8 @@ import org.usfirst.frc.team5830.robot.Robot;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class ElevatorReleasePID extends InstantCommand {

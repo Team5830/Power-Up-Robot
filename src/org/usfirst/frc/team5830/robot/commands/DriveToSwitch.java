@@ -12,18 +12,15 @@ public class DriveToSwitch extends Command {
 	private Command localDriveMotionProfiling = new DriveMotionProfiling();
 	
     public DriveToSwitch() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    	requires(Robot.swerveDrive);
     }
     
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	DriveMotionProfiling.driveAngle = 0;
     	DriveMotionProfiling.driveDistance = Robot.distanceWallToSwitch;
     	localDriveMotionProfiling.start();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return localDriveMotionProfiling.isCompleted();
     }

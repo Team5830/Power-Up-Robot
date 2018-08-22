@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
 
 /**
  * 
- * @author Hunter Pugh
+ * @author Hunter P.
  *
  */
 public class CubeToPortalL extends InstantCommand {

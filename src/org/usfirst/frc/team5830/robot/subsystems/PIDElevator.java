@@ -6,24 +6,18 @@ import org.usfirst.frc.team5830.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class PIDElevator extends PIDSubsystem {
 
-    // Initialize your subsystem here
     public PIDElevator() {
     	super("ElevatorPID", 0.001, 0.0, 0.0);
     	setOutputRange(Robot.maxElevatorSpeedDown, Robot.maxElevatorSpeedUp);
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
     }
 
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+    public void initDefaultCommand() {}
 
     protected double returnPIDInput() {
     	return RobotMap.elevatorEncoder.getDistance();
