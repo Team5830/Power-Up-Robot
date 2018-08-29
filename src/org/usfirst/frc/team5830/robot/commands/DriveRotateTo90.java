@@ -11,19 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveRotateTo90 extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling();
+	private Command localDriveRotationSetpoint = new DriveRotationSetpoint(90);
 	
     public DriveRotateTo90() {
         requires(Robot.swerveDrive);
     }
     
     protected void execute() {
-    	DriveMotionProfiling.driveAngle = 90;
-    	DriveMotionProfiling.driveDistance = 0;
-    	localDriveMotionProfiling.start();
+    	localDriveRotationSetpoint.start();
     }
 
     protected boolean isFinished() {
-        return localDriveMotionProfiling.isCompleted();
+        return localDriveRotationSetpoint.isCompleted();
     }
 }

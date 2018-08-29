@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveToAuto extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling();
+	private Command localDriveStraight = new DriveStraight(Robot.distanceWallToAuto);
 	
     public DriveToAuto() {
     	requires(Robot.swerveDrive);
@@ -20,13 +20,11 @@ public class DriveToAuto extends Command {
     
     protected void execute() {
     	SmartDashboard.putString("Status", "Driving to Auto Line");
-    	DriveMotionProfiling.driveAngle = 0;
-    	DriveMotionProfiling.driveDistance = Robot.distanceWallToAuto;
-    	localDriveMotionProfiling.start();
+    	localDriveStraight.start();
     }
 
     protected boolean isFinished() {
-        return localDriveMotionProfiling.isCompleted();
+        return localDriveStraight.isCompleted();
     }
     
     protected void end() {

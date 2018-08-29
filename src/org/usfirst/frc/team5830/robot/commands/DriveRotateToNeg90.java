@@ -11,21 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveRotateToNeg90 extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling();
+	private Command localDriveRotationSetpoint = new DriveRotationSetpoint(-90);
 	
     public DriveRotateToNeg90() {
         requires(Robot.swerveDrive);
     }
     
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveMotionProfiling.driveAngle = -90;
-    	DriveMotionProfiling.driveDistance = 0;
-    	localDriveMotionProfiling.start();
+    	localDriveRotationSetpoint.start();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return localDriveMotionProfiling.isCompleted();
+        return localDriveRotationSetpoint.isCompleted();
     }
 }

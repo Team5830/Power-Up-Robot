@@ -6,25 +6,25 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
+ * 
+ * @author Hunter P.
  *
  */
 public class DriveToSwitch extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling();
+	private Command localDriveStraight = new DriveStraight(Robot.distanceWallToSwitch);
 	
     public DriveToSwitch() {
     	requires(Robot.swerveDrive);
     }
     
     protected void execute() {
-    	SmartDashboard.putString("Status", "Driving to Switch");
-    	DriveMotionProfiling.driveAngle = 0;
-    	DriveMotionProfiling.driveDistance = Robot.distanceWallToSwitch;
-    	localDriveMotionProfiling.start();
+    	SmartDashboard.putString("Status", "Driving to Auto Line");
+    	localDriveStraight.start();
     }
 
     protected boolean isFinished() {
-        return localDriveMotionProfiling.isCompleted();
+        return localDriveStraight.isCompleted();
     }
     
     protected void end() {

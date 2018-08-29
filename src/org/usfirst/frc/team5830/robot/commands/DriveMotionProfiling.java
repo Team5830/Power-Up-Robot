@@ -13,11 +13,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 /**
- * How to use this command for autonomous:
- * Call command like:
- * 		new MotionProfiling(<angle>, <distance>);
- * <angle> refers to the absolute angle setpoint in degrees, a value between -180 and 180 with 0 facing directly away from the alliance wall.
- * <distance> refers to the amount in inches the robot will move after rotating to the <angle>.
+ * 
+ * WAIT! This code is
+ *   ____    _____   ____    ____    _____    ____      _      _____   _____   ____  
+ 	|  _ \  | ____| |  _ \  |  _ \  | ____|  / ___|    / \    |_   _| | ____| |  _ \ 
+ 	| | | | |  _|   | |_) | | |_) | |  _|   | |       / _ \     | |   |  _|   | | | |
+ 	| |_| | | |___  |  __/  |  _ <  | |___  | |___   / ___ \    | |   | |___  | |_| |
+ 	|____/  |_____| |_|     |_| \_\ |_____|  \____| /_/   \_\   |_|   |_____| |____/                                                                                 
+ * 
+ * and will be deleted when replacement code is completed.
  */
 public class DriveMotionProfiling extends Command {
 	
@@ -50,6 +54,10 @@ public class DriveMotionProfiling extends Command {
     	//If the robot isn't at the angle it's supposed to be at, it will wait until the gyro PID finishes correcting it.
     	if(Math.abs(Robot.pidROTATIONCORRECTION.getSetpoint() - Robot.pidROTATIONCORRECTION.getPosition()) > 5) {//TODO set tolerance (currently 5)
     		SmartDashboard.putString("Autonomous Status", "I got to MotionProfiling Stage 1");
+    		
+    		Robot.pidROTATIONCORRECTION.getPIDController().setP(0.1);
+    		Robot.pidROTATIONCORRECTION.getPIDController().setI(0.0);
+    		Robot.pidROTATIONCORRECTION.getPIDController().setD(0.0);
     		//Gets the angle requested by the command start variable and sets the PID loop to it, then enables it
         	Robot.pidROTATIONCORRECTION.setSetpoint(driveAngle);
         	Robot.pidROTATIONCORRECTION.enable();

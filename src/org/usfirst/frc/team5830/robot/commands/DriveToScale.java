@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveToScale extends Command {
 
-	private Command localDriveMotionProfiling = new DriveMotionProfiling();
+	private Command localDriveStraight = new DriveStraight(Robot.distanceWallToScale);
 	
     public DriveToScale() {
     	requires(Robot.swerveDrive);
@@ -20,13 +20,11 @@ public class DriveToScale extends Command {
     
     protected void execute() {
     	SmartDashboard.putString("Status", "Driving to Scale");
-    	DriveMotionProfiling.driveAngle = 0;
-    	DriveMotionProfiling.driveDistance = Robot.distanceWallToScale;
-    	localDriveMotionProfiling.start();
+    	localDriveStraight.start();
     }
 
     protected boolean isFinished() {
-        return localDriveMotionProfiling.isCompleted();
+        return localDriveStraight.isCompleted();
     }
     
     protected void end() {
