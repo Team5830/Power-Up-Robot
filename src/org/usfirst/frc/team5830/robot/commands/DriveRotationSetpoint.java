@@ -39,22 +39,22 @@ public class DriveRotationSetpoint extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-        	Robot.auto_GYRO_Correction_Swerve.setSetpoint(driveSetpointAngle);
-        	Robot.auto_GYRO_Correction_Swerve.enable();
+        	Robot.pidROTATIONCORRECTION.setSetpoint(driveSetpointAngle);
+        	Robot.pidROTATIONCORRECTION.enable();
         	Robot.swerveDrive.drive(0, 0, Robot.pidOutputAngle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Only is finished when angle setpoint met
-        return Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) < 5 && Math.abs(Robot.auto_GYRO_Correction_Swerve.getSetpoint() - Robot.auto_GYRO_Correction_Swerve.getPosition()) > (0 - 3);
+        return Math.abs(Robot.pidROTATIONCORRECTION.getSetpoint() - Robot.pidROTATIONCORRECTION.getPosition()) < 5 && Math.abs(Robot.pidROTATIONCORRECTION.getSetpoint() - Robot.pidROTATIONCORRECTION.getPosition()) > (0 - 3);
     	//return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {    	
     	//Disables all associated PID loops
-    	Robot.auto_GYRO_Correction_Swerve.disable();
+    	Robot.pidROTATIONCORRECTION.disable();
     	Robot.swerveDrive.drive(0, 0, 0);
     }
 }

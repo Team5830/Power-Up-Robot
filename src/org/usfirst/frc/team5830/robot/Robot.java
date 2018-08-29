@@ -131,7 +131,7 @@ public class Robot extends TimedRobot{
 	
 	//PID Loops
 	public static final PIDLIDARDistance auto_LIDAR_Distance_Swerve = new PIDLIDARDistance();
-	public static final PIDRotationCorrection auto_GYRO_Correction_Swerve = new PIDRotationCorrection();
+	public static final PIDRotationCorrection pidROTATIONCORRECTION = new PIDRotationCorrection();
 	public static final PIDElevator ELEVATORPID = new PIDElevator();
 	public static final PIDWinch WINCHPID = new PIDWinch();
 	public static final PIDWheelDistance WHEELDISTANCEPID = new PIDWheelDistance();
