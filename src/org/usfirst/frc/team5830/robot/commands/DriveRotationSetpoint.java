@@ -17,7 +17,7 @@ public class DriveRotationSetpoint extends Command {
 	private double driveRotationI = 0.0;
 	private double driveRotationD = 0.02;
 	
-	public static double driveSetpointAngle;
+	private double driveSetpointAngle;
 
 	//Negative angle numbers allowed. Negative distance numbers NOT ALLOWED. Instead, have the robot rotate away then move forward.
 	
