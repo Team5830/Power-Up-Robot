@@ -13,7 +13,7 @@ public class PIDWinch extends PIDSubsystem {
 
     public PIDWinch() {
     	super("WinchPID", 0.001, 0.0, 0.0);
-    	setOutputRange(-0.5, 0.25);
+    	setOutputRange(-0.6, 0.25);
     }
 
     public void initDefaultCommand() {}
@@ -23,6 +23,6 @@ public class PIDWinch extends PIDSubsystem {
     }
 
     protected void usePIDOutput(double output) {
-    	RobotMap.winch.set(-output);
+    	RobotMap.winch.set(output);
     }
 }

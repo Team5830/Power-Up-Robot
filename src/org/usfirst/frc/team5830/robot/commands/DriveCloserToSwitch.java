@@ -12,13 +12,25 @@ import edu.wpi.first.wpilibj.command.InstantCommand;
  */
 public class DriveCloserToSwitch extends InstantCommand {
 
+	private boolean isItFinished = false;
+	
     public DriveCloserToSwitch() {
         requires(Robot.swerveDrive);
     }
     
+    
     protected void execute() {
-    	Robot.swerveDrive.drive(0, 0.25, 0);
+    	Robot.swerveDrive.drive(0, -0.15, 0);
     	Timer.delay(2);
     	Robot.swerveDrive.drive(0, 0, 0);
+    	isItFinished = true;
+    }
+    
+    protected boolean isFinished() {
+    	return isItFinished;
+    }
+    
+    protected void end() {
+    	isItFinished = false;
     }
 }

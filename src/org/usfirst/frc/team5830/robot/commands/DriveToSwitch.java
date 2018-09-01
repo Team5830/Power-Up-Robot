@@ -24,7 +24,7 @@ public class DriveToSwitch extends Command {
     }
 
     protected boolean isFinished() {
-        return localDriveStraight.isCompleted();
+        return DriveStraight.isItFinished;
     }
     
     protected void end() {

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5830.robot.commands;
 
+import org.usfirst.frc.team5830.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -15,8 +17,8 @@ public class AutoMoveR_RScale extends CommandGroup {
     	 * rotates 90deg counterclockwise, raises cube, spits cube
     	 */
     	addParallel(new WinchRelease());
-    	addSequential(new DriveToScale());
-    	addSequential(new DriveRotateToNeg90());
+    	addSequential(new DriveStraight(Robot.distanceWallToScale));
+    	addSequential(new DriveRotationSetpoint(-90));
     	addSequential(new CubeToScale());
     	addSequential(new SpitCube());
     }

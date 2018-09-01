@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveStraight extends Command {
 	
-	private double driveStraightP = 0.1;
+	private double driveStraightP = 0.03;
 	private double driveStraightI = 0.0;
 	private double driveStraightD = 0.0;
 	
 	private double driveDistance;
 	private double gyroLockValue;
-	private boolean isItFinished = false;
+	public static boolean isItFinished = false;
 	
     public DriveStraight(double distance) {
         requires(Robot.swerveDrive);
@@ -27,6 +27,7 @@ public class DriveStraight extends Command {
     }
 
     protected void initialize() {
+    	isItFinished = false;
     	//Sets the current gyroscope value to the locking point, so the robot will drive straight from its starting position
     	gyroLockValue = Robot.GYROSUBSYSTEM.getGyroClampedNeg180To180();
     	
@@ -37,11 +38,15 @@ public class DriveStraight extends Command {
     	Robot.pidROTATIONCORRECTION.setOutputRange(-0.05, 0.05);
     	Robot.pidROTATIONCORRECTION.setSetpoint(gyroLockValue);
     	Robot.pidROTATIONCORRECTION.enable();
+    	
+    	///Resets wheel distance encoder to 0
+    	RobotMap.wheelEncoder1.reset();
     }
 
     protected void execute() {
     	if(RobotMap.wheelEncoder1.getDistance() < driveDistance) {
-    		Robot.swerveDrive.drive(0, -0.3, 0);
+    		Robot.swerveDrive.drive(0, -0.35, Robot.pidOutputAngle);
+    		
     	} else { 
     		Robot.swerveDrive.drive(0, 0, 0);
     		isItFinished = true;
@@ -54,7 +59,6 @@ public class DriveStraight extends Command {
 
     protected void end() {
     	Robot.pidROTATIONCORRECTION.disable();
-    	isItFinished = false;
     }
 
     protected void interrupted() {

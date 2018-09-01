@@ -29,7 +29,7 @@ public class SmartDashboardCommand extends Command{
 		SmartDashboard.putNumber("Gyro Angle", Robot.GYROSUBSYSTEM.getGyroClampedNeg180To180());
 		SmartDashboard.putNumber("Elevator Encoder Distance", RobotMap.elevatorEncoder.getDistance());
 		SmartDashboard.putNumber("Winch Encoder Distance", RobotMap.winchEncoder.getDistance());		
-		SmartDashboard.putNumber("POV Position", Robot.xbox.getPOV());
+		//SmartDashboard.putNumber("POV Position", Robot.xbox.getPOV());
     }
 
     protected boolean isFinished() {

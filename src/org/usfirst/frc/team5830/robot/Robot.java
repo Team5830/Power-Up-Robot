@@ -10,6 +10,7 @@ package org.usfirst.frc.team5830.robot;
 import org.usfirst.frc.team5830.robot.commands.AutoLogic;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
 import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
+import org.usfirst.frc.team5830.robot.commands.DriveStraight;
 import org.usfirst.frc.team5830.robot.commands.JoystickMappingInit;
 import org.usfirst.frc.team5830.robot.commands.JoystickMappingPeriodic;
 import org.usfirst.frc.team5830.robot.commands.SuckCube;
@@ -165,7 +166,7 @@ public class Robot extends TimedRobot{
 		 * Cameras/Vision
 		 */
 		//Camera Stream
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(1);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
 		camera.setResolution(640, 480);
 		camera.setFPS(30);
 		
@@ -194,7 +195,7 @@ public class Robot extends TimedRobot{
 		SmartDashboard.putBoolean("Override Intake Sensor", false);
 		
 		//Initiate Gyro reset
-		SmartDashboard.putBoolean("Reset Gyro", false);
+		SmartDashboard.putBoolean("Reset Sensors", false);
 		
 		//Switch between flightsticks and Xbox joystick
 		controlType.addDefault("Dual Flightsticks", 0);
@@ -213,6 +214,8 @@ public class Robot extends TimedRobot{
 		//Shows current robot command running
 		SmartDashboard.putString("Status", "Waiting for Match Start");
 		
+		SmartDashboard.putString("Troubleshoot - String", "null");
+		
 		/**
 		 * Sensor Calibration/Setup
 		 */
@@ -221,7 +224,7 @@ public class Robot extends TimedRobot{
 		RobotMap.elevatorEncoder.reset();
 		RobotMap.winchEncoder.setDistancePerPulse(1);
 		RobotMap.winchEncoder.reset();
-		RobotMap.wheelEncoder1.setDistancePerPulse(0.01);//TODO Set so distance = 1 inch
+		RobotMap.wheelEncoder1.setDistancePerPulse(0.0965989132622258);
 		RobotMap.wheelEncoder1.reset();
 
 	}
@@ -240,13 +243,17 @@ public class Robot extends TimedRobot{
 		SmartDashboard.putNumber("Elevator Encoder Distance", RobotMap.elevatorEncoder.getDistance());
 		SmartDashboard.putNumber("Winch Encoder Distance", RobotMap.winchEncoder.getDistance());
 		
-		//If Reset Gyro button is pressed in SmartDashboard, it will calibrate the gyro. The robot MUST NOT BE MOVING. It then resets the button back to false state.
-		if (SmartDashboard.getBoolean("Reset Gyro", false)) {
+		//If Reset Sensors button is pressed in SmartDashboard, it will calibrate the gyro. The robot MUST NOT BE MOVING. It then resets the button back to false state.
+		if (SmartDashboard.getBoolean("Reset Sensors", false)) {
 			RobotMap.gyro.calibrate();
-			SmartDashboard.putBoolean("Reset Gyro", false);
-			
+			RobotMap.elevatorEncoder.reset();
+			RobotMap.wheelEncoder1.reset();
+			RobotMap.winchEncoder.reset();
+			SmartDashboard.putBoolean("Reset Sensors", false);
 			SmartDashboard.putNumber("Wheel Encoder", RobotMap.wheelEncoder1.getDistance());
 		}
+		
+		SmartDashboard.putBoolean("Troubleshoot - Boolean", DriveStraight.isItFinished);
 		
 	}
 	
@@ -260,6 +267,7 @@ public class Robot extends TimedRobot{
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Troubleshoot - Boolean", DriveStraight.isItFinished);
 		}
 
 	@Override

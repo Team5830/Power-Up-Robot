@@ -11,6 +11,6 @@ public class CubeToSwitch extends CommandGroup {
 
     public CubeToSwitch() {
     	addParallel(new ElevatorToSwitch());
-    	addParallel(new WinchUp());
+    	addParallel(new WinchDown());
     }
 }
