@@ -15,6 +15,7 @@ public class AutoMoveCrossAuto extends CommandGroup {
     	 * rotates 90deg clockwise, raises cube, spits cube
     	 */
     	addParallel(new WinchRelease());
+    	addSequential(new DriveEnsureStraight());
     	addSequential(new DriveToAuto());
     }
 }

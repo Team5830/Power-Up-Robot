@@ -44,9 +44,10 @@ public class DriveStraight extends Command {
     }
 
     protected void execute() {
-    	if(RobotMap.wheelEncoder1.getDistance() < driveDistance) {
+    	if(RobotMap.wheelEncoder1.getDistance() < driveDistance - 20) {
     		Robot.swerveDrive.drive(0, -0.35, Robot.pidOutputAngle);
-    		
+    	} else if(RobotMap.wheelEncoder1.getDistance() < driveDistance) {
+    		Robot.swerveDrive.drive(0, -0.15, Robot.pidOutputAngle);
     	} else { 
     		Robot.swerveDrive.drive(0, 0, 0);
     		isItFinished = true;

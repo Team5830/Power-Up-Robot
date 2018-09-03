@@ -17,6 +17,7 @@ public class AutoMoveR_RScale extends CommandGroup {
     	 * rotates 90deg counterclockwise, raises cube, spits cube
     	 */
     	addParallel(new WinchRelease());
+    	addSequential(new DriveEnsureStraight());
     	addSequential(new DriveStraight(Robot.distanceWallToScale));
     	addSequential(new DriveRotationSetpoint(-90));
     	addSequential(new CubeToScale());

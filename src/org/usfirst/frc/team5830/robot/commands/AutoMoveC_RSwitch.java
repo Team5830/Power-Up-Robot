@@ -16,7 +16,8 @@ public class AutoMoveC_RSwitch extends CommandGroup {
     	 * moves 10 inches, spits cube
     	 */
     	addParallel(new WinchRelease());
-    	addParallel(new DriveStrafeToRSwitch());
+    	addSequential(new DriveEnsureStraight());
+    	addSequential(new DriveStrafeToRSwitch());
     	addSequential(new CubeToSwitch());
     	addSequential(new DriveCloserToSwitch());
     	addSequential(new SpitCube());

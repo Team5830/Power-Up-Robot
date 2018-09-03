@@ -21,7 +21,10 @@ public class SuckCube extends Command {
     	//Only sucks cube if cube isn't there, UNLESS override is enabled in Shuffleboard
     	if(!SmartDashboard.getBoolean("Override Intake Sensor", false)) { //If sensor override is NOT enabled
     		if(Robot.lidarSubsystem.getDistanceIn(false) >= Robot.cubeDistance) Robot.POWERCUBE.in(); //If distance to cube is more than threshold, suck cube
-    		else commandWinchUp.start(); //If distance to cube is SHORTER than threshold, raise the winch to get the cube off the ground
+    		else {
+    			commandWinchUp.start(); //If distance to cube is SHORTER than threshold, raise the winch to get the cube off the ground
+    			Robot.POWERCUBE.stop();
+    		}
     	}
     	else Robot.POWERCUBE.in(); //If override button is enabled, just suck the cube no matter what
     }
