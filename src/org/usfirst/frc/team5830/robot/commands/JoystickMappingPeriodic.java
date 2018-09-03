@@ -31,16 +31,16 @@ public class JoystickMappingPeriodic extends InstantCommand {
     					if (Math.abs(Robot.xbox.getRawAxis(1)) > Robot.xboxStickDeadzone) Robot.driveY = Robot.xbox.getRawAxis(1); else Robot.driveY = 0;
     					if (Math.abs(Robot.xbox.getRawAxis(4)) > Robot.xboxStickDeadzone) Robot.rotX = Robot.xbox.getRawAxis(4); else Robot.rotX = 0;
     					Robot.povPosition = Robot.xbox.getPOV();
-    					if (Robot.xbox.getRawAxis(2) > Robot.xboxTriggerDeadzone) Robot.commandSuckCube.start(); else Robot.commandSuckCube.cancel();
-    					if (Robot.xbox.getRawAxis(3) > Robot.xboxTriggerDeadzone) Robot.commandSpitCube.start(); else Robot.commandSpitCube.cancel();
+    					if (Robot.xbox.getRawAxis(3) > Robot.xboxTriggerDeadzone) Robot.commandSuckCube.start(); else Robot.commandSuckCube.cancel();
+    					if (Robot.xbox.getRawAxis(2) > Robot.xboxTriggerDeadzone) Robot.commandSpitCube.start(); else Robot.commandSpitCube.cancel();
     					break;
     				case 2: //Daniel
     					if (Math.abs(Robot.xbox.getRawAxis(0)) > Robot.xboxStickDeadzone) Robot.driveX = Robot.xbox.getRawAxis(0); else Robot.driveX = 0;
     					if (Math.abs(Robot.xbox.getRawAxis(1)) > Robot.xboxStickDeadzone) Robot.driveY = Robot.xbox.getRawAxis(1); else Robot.driveY = 0;
     					if (Math.abs(Robot.xbox.getRawAxis(4)) > Robot.xboxStickDeadzone) Robot.rotX = Robot.xbox.getRawAxis(4); else Robot.rotX = 0;
     					Robot.povPosition = Robot.xbox.getPOV();
-    					if (Robot.xbox.getRawAxis(2) > Robot.xboxTriggerDeadzone) Robot.commandSuckCube.start(); else Robot.commandSuckCube.cancel();
-    					if (Robot.xbox.getRawAxis(3) > Robot.xboxTriggerDeadzone) Robot.commandSpitCube.start(); else Robot.commandSpitCube.cancel();
+    					if (Robot.xbox.getRawAxis(3) > Robot.xboxTriggerDeadzone) Robot.commandSuckCube.start(); else Robot.commandSuckCube.cancel();
+    					if (Robot.xbox.getRawAxis(2) > Robot.xboxTriggerDeadzone) Robot.commandSpitCube.start(); else Robot.commandSpitCube.cancel();
     					break;
     				case 3: //Hannah
     					Robot.driveX = Robot.leftJoy.getRawAxis(0);

@@ -214,7 +214,10 @@ public class Robot extends TimedRobot{
 		//Shows current robot command running
 		SmartDashboard.putString("Status", "Waiting for Match Start");
 		
+		//Troubleshooting Posts - visible in tab 2 of shuffleboard, made for fast and easy logic troubleshooting
 		SmartDashboard.putString("Troubleshoot - String", "null");
+		//SmartDashboard.putBoolean("Troubleshoot - Boolean", false); //Commented out to avoid confusion with an actual "false" troubleshooting step
+		SmartDashboard.putNumber("Troubleshoot - Number", 0);
 		
 		/**
 		 * Sensor Calibration/Setup
