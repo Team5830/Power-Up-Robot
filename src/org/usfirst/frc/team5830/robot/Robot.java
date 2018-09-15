@@ -63,7 +63,7 @@ public class Robot extends TimedRobot{
 	//Xbox controller trigger deadzone size. 1 is entire range, 0 is disabled, closer to zero means less deadzone
 	public static final double xboxTriggerDeadzone = 0.2;
 	//Distance from LIDAR cube has to be to switch intake from sucking to spitting
-	public static final double cubeDistance = 6; //Inches
+	public static final double cubeDistance = 9.5; //Inches
 	//Maximum elevator speed up
 	public static final double maxElevatorSpeedUp = 1; //Between 0 and 1. NEGATIVE NUMBERS WILL NOT WORK!
 	//Maximum elevator speed up
