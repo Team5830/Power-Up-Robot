@@ -203,6 +203,7 @@ public class Robot extends TimedRobot{
 		controlType.addObject("Daniel (Xbox)", 2);
 		controlType.addObject("Hannah (Flightsticks)", 3);
 		controlType.addObject("Hunter (Flightsticks)", 4);
+		controlType.addObject("Arcade Flightstick", 5);
 		SmartDashboard.putData("Control Method", controlType);
 		
 		//Displays whether or not Balance Protection is enabled via a color changing "Boolean Box" in Shuffleboard
