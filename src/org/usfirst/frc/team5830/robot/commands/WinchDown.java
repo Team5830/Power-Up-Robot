@@ -16,7 +16,7 @@ public class WinchDown extends Command {
     }
 
     protected void execute() {
-    	Robot.WINCHPID.setSetpoint(1700);
+    	Robot.WINCHPID.setSetpoint(2000);
     	Robot.WINCHPID.enable();
     }
 

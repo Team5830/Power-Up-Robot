@@ -35,7 +35,7 @@ public class DriveStrafeToLSwitch extends Command {
     public DriveStrafeToLSwitch() {
         requires(Robot.swerveDrive);
         requires(Robot.pidROTATIONCORRECTION);
-    	driveDistance = 111.57;
+    	driveDistance = 112;
     }
 
     protected void initialize() {

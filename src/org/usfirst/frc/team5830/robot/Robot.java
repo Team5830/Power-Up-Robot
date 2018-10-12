@@ -9,7 +9,6 @@ package org.usfirst.frc.team5830.robot;
 
 import org.usfirst.frc.team5830.robot.commands.AutoLogic;
 import org.usfirst.frc.team5830.robot.commands.DriveBalance;
-import org.usfirst.frc.team5830.robot.commands.DriveRotationSetpoint;
 import org.usfirst.frc.team5830.robot.commands.DriveStraight;
 import org.usfirst.frc.team5830.robot.commands.JoystickMappingInit;
 import org.usfirst.frc.team5830.robot.commands.JoystickMappingPeriodic;
@@ -45,15 +44,17 @@ public class Robot extends TimedRobot{
 	/**
 	 * User-Defined Variables
 	 */
-
+	
+	//CENTER SWITCH STRAFE IS DEFINED IN DriveStrafeToLSwitch and DriveStrafeToRSwitch. I don't know why.
+	
 	//Distance from wall to Scale
-	public static final double distanceWallToScale = 305; //Inches
-	//Distance from wall to Switch
-	public static final double distanceWallToSwitch = 130; //Inches
+	public static final double distanceWallToScale = 310; //Inches
+	//Distance from wall to Switch SIDE
+	public static final double distanceWallToSwitch = 155; //Inches
 	//Distance from wall to Auto Line
-	public static final double distanceWallToAuto = 125; //Inches
+	public static final double distanceWallToAuto = 120; //Inches
 	//Distance from wall to Center Position Auto Line
-	public static final double distanceWallToCAuto = 115; //Inches
+	public static final double distanceWallToCAuto = 120; //Inches
 	//Distance from 10 inches from wall to 10 inches from switch, traveling at 45deg angle. Remember, the robot needs room to rotate after getting there
 	public static final double distanceCWallToSwitch = 130;//Inches //TODO Calibrate value - this value is arbitrary
 	//Balance protection elevator height theshold
@@ -146,12 +147,12 @@ public class Robot extends TimedRobot{
 	public static Command commandSuckCube = new SuckCube();
 	public static Command commandSpitCube = new TeleopSpitCube();
 	private static Command driveBalance = new DriveBalance();
-	public static Command rotateTo0 = new DriveRotationSetpoint(0);
+	/*public static Command rotateTo0 = new DriveRotationSetpoint(0);
 	public static Command rotateTo45 = new DriveRotationSetpoint(45);
 	public static Command rotateTo90 = new DriveRotationSetpoint(90);
 	public static Command rotateTo180 = new DriveRotationSetpoint(180);
 	public static Command rotateToNeg90 = new DriveRotationSetpoint(-90);
-	public static Command rotateToNeg45 = new DriveRotationSetpoint(-45);
+	public static Command rotateToNeg45 = new DriveRotationSetpoint(-45);*/
 	private static Command autoLogicMain = new AutoLogic();
 	
 	/**

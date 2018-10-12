@@ -22,7 +22,7 @@ public class DriveBalance extends Command {
     }
 
     protected void execute() {
-    	Robot.swerveDrive.drive(Robot.driveX/4, Robot.driveY/4, Robot.rotX/4);
+    	Robot.swerveDrive.drive(Robot.driveX/2, Robot.driveY/2, Robot.rotX);
     }
     
     protected boolean isFinished() {

@@ -16,7 +16,7 @@ public class WinchRelease extends InstantCommand {
     }
 
     protected void execute() {
-    	Robot.WINCHPID.setSetpoint(-500);
+    	Robot.WINCHPID.setSetpoint(-400);
     	Robot.WINCHPID.enable();
     }
 }

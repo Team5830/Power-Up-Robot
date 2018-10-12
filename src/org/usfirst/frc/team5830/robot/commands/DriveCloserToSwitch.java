@@ -20,7 +20,7 @@ public class DriveCloserToSwitch extends InstantCommand {
     
     
     protected void execute() {
-    	Robot.swerveDrive.drive(0, -0.15, 0);
+    	Robot.swerveDrive.drive(0, -0.25, 0);
     	Timer.delay(2);
     	Robot.swerveDrive.drive(0, 0, 0);
     	isItFinished = true;

@@ -18,7 +18,7 @@ public class DriveTeleop extends Command {
 
     protected void execute() {
     	SmartDashboard.putString("Status", "Operator-Controlled Driving");
-    	Robot.swerveDrive.drive(Robot.driveX/2, Robot.driveY/2, Robot.rotX/2);
+    	Robot.swerveDrive.drive(Robot.driveX, Robot.driveY, Robot.rotX);
     	
     	//CALIBRATION ONLY
     	//Robot.swerveDrive.drive(0, Robot.driveY, 0);

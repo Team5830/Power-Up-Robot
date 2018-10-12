@@ -40,7 +40,7 @@ public class DriveRotationSetpoint extends Command {
     }
 
     protected void execute() {
-        	Robot.swerveDrive.drive(0, 0, Robot.pidOutputAngle);
+        	Robot.swerveDrive.drive(Robot.driveX, Robot.driveY, Robot.pidOutputAngle);
     }
 
     protected boolean isFinished() {

@@ -18,7 +18,7 @@ public class ElevatorToSwitch extends Command {
 
     protected void execute() {
     	SmartDashboard.putString("Status", "Cube to Switch");
-    	Robot.ELEVATORPID.setSetpoint(2000);
+    	Robot.ELEVATORPID.setSetpoint(3000);
     	Robot.ELEVATORPID.enable();
     }
 
