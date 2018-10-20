@@ -66,8 +66,8 @@ public class JoystickMappingInit extends InstantCommand {
 				Robot.buttonCubeToGround1 = new JoystickButton(Robot.xbox,1); //A
 				Robot.buttonWinchRelease = new JoystickButton(Robot.xbox,3);  //X
 				
-				Robot.buttonPortalL.whenPressed(new CubeToPortalL());
-				Robot.buttonPortalR.whenPressed(new CubeToPortalR());
+				//Robot.buttonPortalL.whenPressed(new CubeToPortalL());
+				//Robot.buttonPortalR.whenPressed(new CubeToPortalR());
 				Robot.buttonCubeToGround1.whenPressed(new CubeToGround());
 				Robot.buttonCubeToSwitch.whenPressed(new CubeToSwitch());
 				Robot.buttonCubeToScale.whenPressed(new CubeToScale());
