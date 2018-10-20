@@ -193,7 +193,7 @@ public class Robot extends TimedRobot{
 		SmartDashboard.putBoolean("Field Oriented?", false);
 		
 		//Overrides cube distance check if enabled and runs instake on button command regardless of what the LIDAR distance is.
-		SmartDashboard.putBoolean("Override Intake Sensor", false);
+		SmartDashboard.putBoolean("Override Intake Sensor", true);
 		
 		//Initiate Gyro reset
 		SmartDashboard.putBoolean("Reset Sensors", false);
